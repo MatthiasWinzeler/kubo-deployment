@@ -41,8 +41,8 @@ create_and_upload_release() {
 
   if [ -d "$release_dirname" ]; then
     pushd "$release_dirname"
-      BOSH_ENVIRONMENT="${BOSH_NAME}" BOSH_CLIENT=bosh_admin BOSH_CLIENT_SECRET=$(get_bosh_secret) bosh-cli create-release --force --name "${release_name} --version 0.9.0-apc.1"
-      upload_release "--name=${release_name}"
+      BOSH_ENVIRONMENT="${BOSH_NAME}" BOSH_CLIENT=bosh_admin BOSH_CLIENT_SECRET=$(get_bosh_secret) bosh-cli create-release --force --name "${release_name}"
+      upload_release "--name=${release_name}" --version 0.9.0-apc.1
     popd
   else
     echo "${release_dirname} repo not found - unable to create the ${release_name} release"
