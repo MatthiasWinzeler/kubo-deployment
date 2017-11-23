@@ -1,20 +1,22 @@
 # WARNING: We do not recommend to expose Director and any other services over public addresses.
 
-- type: replace
-  path: /networks/-
-  value:
-    name: public
-    type: vip
+# taawima0: causes bosh to fail in our setup
+#- type: replace
+#  path: /networks/-
+#  value:
+#    name: public
+#    type: vip
 
 - type: replace
   path: /instance_groups/name=bosh/networks/0/default?
   value: [dns, gateway]
 
-- type: replace
-  path: /instance_groups/name=bosh/networks/-
-  value:
-    name: public
-    static_ips: [((external_ip))]
+# taawima0: causes bosh to fail in our setup
+#- type: replace
+#  path: /instance_groups/name=bosh/networks/-
+#  value:
+#    name: public
+#    static_ips: [((external_ip))]
 
 - type: replace
   path: /instance_groups/name=bosh/properties/director/default_ssh_options?/gateway_host

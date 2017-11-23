@@ -12,7 +12,8 @@ resource_pools:
   network: default
   env:
     bosh:
-      password: '*'
+      # taawima0: default password (until it is overwritten) is c1oudc0w
+      password: '$6$semKbXtBV2Xewg1$kEgs7xEnXdxMZyOWq4zZcb.slpa3om1V9qOUZnfJ9uNnw/uq3HU/ltXZ1/OB38V5OPZyuWIeBEbD6Kr/MvzhY0'
       mbus:
         cert: ((mbus_bootstrap_ssl))
 

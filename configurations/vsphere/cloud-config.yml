@@ -3,10 +3,11 @@ azs:
 - name: z1
   cloud_properties:
     datacenters:
-    - clusters: [((vcenter_cluster)): { resource_pool: ((vcenter_rp))}]
+    - clusters: [((vcenter_cluster)): {}]
 
+# taawima0: introduced fix ip ranges master & workspace for LB exposure
 networks:
-- name: &cloud_network ((deployments_network))
+- name: master
   type: manual
   subnets:
   - range: ((internal_cidr))
@@ -15,8 +16,27 @@ networks:
     azs: [z1]
     cloud_properties:
       name: ((network_name))
-    reserved: ((reserved_ips))
-    static: []
+    reserved: ((master_reserved_ips))
+- name: worker
+  type: manual
+  subnets:
+  - range: ((internal_cidr))
+    gateway: ((internal_gw))
+    dns: [((dns_recursor_ip))]
+    azs: [z1]
+    cloud_properties:
+      name: ((network_name))
+    reserved: ((worker_reserved_ips))
+- name: workspace
+  type: manual
+  subnets:
+  - range: ((internal_cidr))
+    gateway: ((internal_gw))
+    dns: [((dns_recursor_ip))]
+    azs: [z1]
+    cloud_properties:
+      name: ((network_name))
+    reserved: ((workspace_reserved_ips))
 
 vm_types:
 - name: common
@@ -45,7 +65,7 @@ disk_types:
 
 compilation:
   workers: 4
-  network: *cloud_network
+  network: worker
   az: z1
   reuse_compilation_vms: true
   vm_type: worker

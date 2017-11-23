@@ -86,8 +86,8 @@ generate_manifest_vsphere() {
 
   generate_manifest_generic "$bosh_env" \
     --vars-file "${bosh_env}/director-secrets.yml" \
-    --ops-file "$(repo_directory)/bosh-deployment/vsphere/cpi.yml" \
-    --ops-file "$(repo_directory)/bosh-deployment/vsphere/resource-pool.yml"
+    --ops-file "$(repo_directory)/bosh-deployment/vsphere/cpi.yml"
+  # taawima0: removed resource pool ops file since we dont use RPs
 }
 
 generate_manifest_openstack() {
@@ -119,12 +119,15 @@ generate_manifest_generic() {
   bosh_env="$1"; shift
   iaas_specific_args="$@"
 
+  # taawima0: added opsfiles for proxy & external IP exposure
   bosh-cli int "$(repo_directory)/bosh-deployment/bosh.yml"  \
     --ops-file "$(repo_directory)/bosh-deployment/uaa.yml" \
     --ops-file "$(repo_directory)/bosh-deployment/local-dns.yml" \
     --ops-file "$(repo_directory)/configurations/generic/dns-addresses.yml" \
     --ops-file "$(repo_directory)/bosh-deployment/credhub.yml" \
     --ops-file "$(repo_directory)/configurations/generic/bosh-admin-client.yml" \
+    --ops-file "$(repo_directory)/bosh-deployment/external-ip-not-recommended.yml" \
+    --ops-file "$(repo_directory)/bosh-deployment/misc/proxy.yml" \
     --vars-file "${bosh_env}/director.yml" \
     ${iaas_specific_args} \
     ${BOSH_EXTRA_OPS}

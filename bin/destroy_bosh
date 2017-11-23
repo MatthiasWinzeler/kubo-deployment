@@ -96,9 +96,13 @@ destroy_vsphere() {
 
   bosh_env="$1"
 
-  bosh-cli clean-up --all -n
+  # taawima0: cleanup seems to cause issues with proxy
+#  bosh-cli clean-up --all -n
+  # taawima0: added opsfiles for proxy & external IP exposure
   bosh-cli delete-env "$(repo_directory)/bosh-deployment/bosh.yml" \
       --ops-file "$(repo_directory)/bosh-deployment/vsphere/cpi.yml" \
+      --ops-file "$(repo_directory)/bosh-deployment/external-ip-not-recommended.yml" \
+      --ops-file "$(repo_directory)/bosh-deployment/misc/proxy.yml" \
       --state "${bosh_env}/state.json" \
       --vars-store "${bosh_env}/creds.yml" \
       --vars-file "${bosh_env}/director.yml" \
