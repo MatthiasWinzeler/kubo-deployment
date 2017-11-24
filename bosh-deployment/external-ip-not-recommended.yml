@@ -18,9 +18,10 @@
 #    name: public
 #    static_ips: [((external_ip))]
 
-- type: replace
-  path: /instance_groups/name=bosh/properties/director/default_ssh_options?/gateway_host
-  value: ((external_ip))
+# taawima0: we dont wanna jump over BOSH, deployments are directly reachable from workspace
+#- type: replace
+#  path: /instance_groups/name=bosh/properties/director/default_ssh_options?/gateway_host
+#  value: ((external_ip))
 
 # todo should not access non-defined vars
 - type: replace
