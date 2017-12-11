@@ -55,6 +55,8 @@ instance_groups:
         kubernetes: ((tls-kubernetes))
       http_proxy: ((bosh_http_proxy))
       no_proxy: ((bosh_no_proxy))
+      additional_tokens: ((additional_tokens))
+      additional_policies: ((additional_policies))
   - name: kubeconfig
     release: kubo
     properties:
