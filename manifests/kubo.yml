@@ -138,7 +138,7 @@ instance_groups:
     release: kubo
   stemcell: trusty
   vm_type: worker
-  persistent_disk_type: 10240
+  persistent_disk_type: 81920
 
 update:
   canaries: 1
